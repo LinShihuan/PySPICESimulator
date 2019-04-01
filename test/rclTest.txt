@@ -1,0 +1,18 @@
+title line
+
+*this is L
+L1 1 2 10u
+*this is R
+R1 2 3 
++100
+C1 2 3 10u
+R2 3 4 200
+R3 4 0 100
+V1 1 0 5
+
+.model NMODEL NMOS (LEVEL = 49, VTH0 = 0.5
++ U0 = 1e-6, U1 = 2.3, U2 = 0.1
++ A0 = 1, AG = 2, K1 = 0.1, K2 = 0.2)
+
+.DC V1 1 10 1
+.PRINT V(1)
