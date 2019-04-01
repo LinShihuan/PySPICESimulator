@@ -41,5 +41,21 @@ class Model:
     __type = modelType.Unknown
     __level = ''
     __params = {}
+    __loaded = False
     def __init__(self):
         pass
+        
+    def ReadModel(self, content):
+        #it starts with .model
+        pass
+
+    def IsValidModel(self):
+        if self.__loaded and (not self.__type == modelType.Unknown):
+            return True
+        return False
+
+    def GetName(self):
+        return self.__name
+
+    def GetParams(self):
+        return self.__params
