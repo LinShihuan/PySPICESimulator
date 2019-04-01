@@ -9,4 +9,13 @@ def GetWord(content):
     if nextBlank == -1:
         return content.strip(), ''
     return content[0:nextBlank], content[nextBlank:].strip()
+
+def TrimAtEuqalSign(content):
+    content = content.strip()
+    while content.find(' =') > 0:
+        content = content.replace(' =', '=')
+    while content.find('= ') > 0:
+        content = content.replace('= ', '=')
+    return content
+
     

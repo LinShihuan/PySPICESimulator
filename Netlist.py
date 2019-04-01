@@ -115,29 +115,29 @@ class Statement:
             return
         if content[0] == '.':
             #control, output, model, analyses, subckt
-            if content.find('.MODEL') == 0:
+            if content.find('.MODEL ') == 0:
                 self.type = StatementType.Model
-            elif content.find('.SUBCKT') == 0:
+            elif content.find('.SUBCKT ') == 0:
                 self.type = StatementType.Subckt_Start
             elif content.find('.ENDS') == 0:
                 self.type = StatementType.Subckt_End
-            elif content.find('.OPTION') == 0:
+            elif content.find('.OPTION ') == 0:
                 self.type = StatementType.Option
-            elif content.find('.PARAM') == 0:
+            elif content.find('.PARAM ') == 0:
                 self.type = StatementType.Param
             elif content.find('.OP') == 0:
                 self.type = StatementType.Analyses
-            elif content.find('.DC') == 0:
+            elif content.find('.DC ') == 0:
                 self.type = StatementType.Analyses
-            elif content.find('.AC') == 0:
+            elif content.find('.AC ') == 0:
                 self.type = StatementType.Analyses
-            elif content.find('.TRAN') == 0:
+            elif content.find('.TRAN ') == 0:
                 self.type = StatementType.Analyses                
-            elif content.find('.NOISE') == 0:
+            elif content.find('.NOISE ') == 0:
                 self.type = StatementType.Analyses                                
-            elif content.find('.PRINT') == 0:
+            elif content.find('.PRINT ') == 0:
                 self.type = StatementType.Output
-            elif content.find('.PLOT') == 0:
+            elif content.find('.PLOT ') == 0:
                 self.type = StatementType.Output
         elif content[0] == 'R':
             self.type = StatementType.R
@@ -181,7 +181,7 @@ class Netlist:
         with open(self.__fileName, "r") as netFile:
             tmpLine = netFile.readline()
             while len(tmpLine) > 0:
-                tmpLine = tmpLine.strip();        
+                tmpLine = tmpLine.strip()
                 lineIndex += 1
                 if lineIndex == 1 or len(tmpLine) == 0:
                     pass
@@ -201,6 +201,9 @@ class Netlist:
             else:
                 if len(strLine) > 0:
                     self.__statements.append(Statement(lastLine, strLine))
+    
+    def ReadParameters(self):
+        pass
 
     def GetStatements(self):
         return self.__statements
