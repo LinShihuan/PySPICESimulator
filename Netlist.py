@@ -1,4 +1,6 @@
 import numpy as np
+from Circuit import Circuit
+import Util
 
 class __StatementType:
     __R = 'Resitor'
@@ -172,8 +174,10 @@ class Statement:
 class Netlist:    
     __statements = []
     __fileName = ''
+    __circuit = None
     def __init__(self, inputFile):
         self.__fileName = inputFile
+        self.__circuit = Circuit()
 
     def Preprocess(self):
         lineIndex = 0
@@ -203,10 +207,24 @@ class Netlist:
                     self.__statements.append(Statement(lastLine, strLine))
     
     def ReadParameters(self):
-        pass
+        for statement in self.__statements:
+            if statement.type == StatementType.Param:
+                content = statement.content
+                word, content = Util.GetWord(content)
+                assert(word == '.PARAM')
+                content = Util.TrimAtEuqalSign(content)
+                words = content.split(',')
+                for pvPair in words:
+                    name, value = Util.DivideNameValue(pvPair)
+                    if name == None or value == None:
+                        raise "Error in parameter defination"
+                    else:
+                        self.__circuit.Params[name] = eval(value)
 
     def GetStatements(self):
         return self.__statements
+    def GetCircuit(self):
+        return self.__circuit
                                 
                 
                 

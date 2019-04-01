@@ -1,7 +1,7 @@
-from Netlist import *
+from Netlist import Netlist, Statement, StatementType
 import numpy as numpy
-from Util import *
-from Circuit import *
+import Util
+from Circuit import Circuit
 
 state = Statement(1, "R1 1 2 100")
 print(state.type)
@@ -13,9 +13,8 @@ statements = netlist.GetStatements()
 for line in statements:
     print(line)
 
-words = 'one two three wordA wordB wordC'
-print(GetWord(words))
+netlist.ReadParameters()
 
-myCircuit = Circuit()
-myCircuit.Params['paramA'] = 1
-print(myCircuit.Params)
+print(netlist.GetCircuit().Params)
+
+ 

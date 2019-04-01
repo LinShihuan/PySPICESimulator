@@ -18,4 +18,12 @@ def TrimAtEuqalSign(content):
         content = content.replace('= ', '=')
     return content
 
+def DivideNameValue(paramValuePair):
+    paramValuePair = paramValuePair.strip()
+    words = paramValuePair.split('=')
+    if len(words) == 2:
+        return words[0].strip(), words[1].strip()
+    else:
+        return None, None
+
     
