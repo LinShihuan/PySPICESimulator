@@ -1,6 +1,7 @@
 import numpy as np
 from Circuit import Circuit
 import Util
+from Model import Model
 
 class __StatementType:
     __R = 'Resitor'
@@ -210,9 +211,10 @@ class Netlist:
         for statement in self.__statements:
             if statement.type == StatementType.Param:
                 content = statement.content
-                word, content = Util.GetWord(content)
+                word, content = Util.GetNextWord(content)
                 assert(word == '.PARAM')
-                content = Util.TrimAtEuqalSign(content)
+                content = Util.TrimBeforeAfter('=', content)
+                content = Util.TrimBeforeAfter(',', content)
                 words = content.split(',')
                 for pvPair in words:
                     name, value = Util.DivideNameValue(pvPair)
@@ -220,6 +222,20 @@ class Netlist:
                         raise "Error in parameter defination"
                     else:
                         self.__circuit.Params[name] = eval(value)
+    def ReadGlobalModel(self):
+        level = 0
+        for statement in self.__statements:
+            if statement.type == StatementType.Subckt_Start:
+                level = level + 1
+            elif statement.type == StatementType.Subckt_End:
+                level = level - 1
+            elif statement.type == StatementType.Model and level == 0:
+                content = statement.content 
+                model = Model()
+                if model.ReadModel(content):
+                    self.__circuit.ModelCards.append(model)
+                else:
+                    print(model.GetErrorMessage())
 
     def GetStatements(self):
         return self.__statements

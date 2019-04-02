@@ -1,6 +1,6 @@
 import numpy as py
 
-def GetWord(content):
+def GetNextWord(content):
 #get the word before next blank
     content = content.strip()
     if len(content) < 1:
@@ -10,13 +10,35 @@ def GetWord(content):
         return content.strip(), ''
     return content[0:nextBlank], content[nextBlank:].strip()
 
-def TrimAtEuqalSign(content):
+def TrimBeforeAfter(sign, content):
     content = content.strip()
-    while content.find(' =') > 0:
-        content = content.replace(' =', '=')
-    while content.find('= ') > 0:
-        content = content.replace('= ', '=')
+    while content.find(' '+sign) > 0:
+        content = content.replace(' '+sign, sign)
+    while content.find(sign + ' ') > 0:
+        content = content.replace(sign +' ', sign)
     return content
+
+def RemoveSpace(content):
+    if content == None:
+        return None
+    if len(content) == 0:
+        return ''
+    content = TrimBeforeAfter('=', content)
+    content = TrimBeforeAfter(',', content)
+    while not content.find('  ') == -1:
+        content = content.replace('  ', ' ')
+    result = ''
+    sCount = 0
+    for c in content:
+        if c == '\'':
+            sCount = (sCount+1) % 2
+        if c == ' ' and sCount == 1:
+            pass
+        else:
+            result = result+c
+    return result
+            
+    
 
 def DivideNameValue(paramValuePair):
     paramValuePair = paramValuePair.strip()
@@ -24,6 +46,6 @@ def DivideNameValue(paramValuePair):
     if len(words) == 2:
         return words[0].strip(), words[1].strip()
     else:
-        return None, None
+        return '', ''
 
     
