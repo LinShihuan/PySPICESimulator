@@ -86,6 +86,10 @@ class Netlist:
             elif StatementType.IsValidDeviceType(statement.type) and level == 0:
                 content = statement.content 
                 device = Device.CreateDevice()
+                if device == None:
+                    print("Unsupport device:"+ statement)
+                    return False
+
                 if device.ReadDevice(content):
                     self.__circuit.Devices.append(device)
                 else:

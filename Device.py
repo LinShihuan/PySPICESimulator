@@ -1,12 +1,15 @@
 
 from Statement import StatementType, Statement
+import Util
 
 class Device:
-    __name = ''
-    __nodes = []
-    __model = ''
-    __instantParams = []
-    __errorMsg = ''
+    name = ''
+    nodes = []
+    internalNodes = []
+    additionalNodes = []
+    model = ''
+    instantParams = []
+    errorMsg = ''
     def __init__(self):
         pass
     def AddNodes(self, globalNodes):
@@ -18,21 +21,44 @@ class Device:
         if not StatementType.IsValidDeviceType(devType):
             return None
         if devType == StatementType.R:
-            device = Device_R()
-            return device
+            return Device_R()
+        elif devType == StatementType.C:
+            return Device_C()
+        elif devType == StatementType.L:
+            return Device_L()
+        else:
+            return None
 
     def ReadDevice(self, content):
         if content == None:
             return None
 
     def GetErrorMessage(self):
-        return self.__errorMsg
+        return self.errorMsg
 
 class Device_R(Device):
     def __init__(self):
         pass
     def ReadDevice(self, content):
-        pass
+        if content == None:
+            self.errorMsg = "None content"
+            return False
+        if len(content) < 2:
+            self.errorMsg = "Invalid content"
+            return False
+        word, content = Util.GetNextWord(content)
+        self.name = word
+        for i in range(2):
+            word, content = Util.GetNextWord(content)
+            if len(word) == 0:
+                self.errorMsg = "Missing node name"
+                return False
+            else:
+                self.nodes.append(word)
+        word, content = Util.GetNextWord(content)
+        
+
+            
 
 class Device_C(Device):
     def __init__(self):
