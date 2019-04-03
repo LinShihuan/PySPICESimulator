@@ -16,7 +16,7 @@ for line in statements:
 netlist.ReadParameters()
 netlist.ReadGlobalModel()
 
-print(netlist.GetCircuit().ModelCards[0].GetParams())
+print(netlist.GetCircuit().ModelCards[0].GetName(), netlist.GetCircuit().ModelCards[0].GetParams())
 
 strTest = ' A=  2      B = \'1+2   * 3     \''
 print(Util.RemoveSpace(strTest))

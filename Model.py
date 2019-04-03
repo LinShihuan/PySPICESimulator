@@ -11,8 +11,10 @@ class __ModelType:
     __Q = 'BJT'
     __Unknown = 'Unknwon'
     __SupportModel = [__R, __C, __L, __N, __P, __D, __Q]
+    
     def __init__(self):
         pass
+
     @property
     def R(self):
         return self.__R
