@@ -67,7 +67,7 @@ def EvaluateValue(value):
         return 0.
     value = str(value).upper()
     if IsNumber(value):
-        return value
+        return eval(value)
     if len(value) < 2:
         return 0.
     if value[0] == '\'' and value[-1] == '\'':
@@ -80,7 +80,12 @@ def EvaluateValue(value):
     for key in SPICEUNIT.keys():
         if key in value:
             value = value.replace(key, '*'+SPICEUNIT[key])  
-    return eval(value)          
+    ret = 0.
+    try:
+        ret = eval(value)
+    except:
+        ret = 0.
+    return ret         
 def ExpandExpression(value):
     #add into blank before and after each operator
     if value == None:

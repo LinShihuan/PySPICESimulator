@@ -18,6 +18,13 @@ for line in statements:
 netlist.ReadParameters()
 netlist.ReadGlobalModel()
 netlist.ReadGlobalDevice()
+netlist.ReadAnalyses()
+
+for devices in netlist.GetCircuit().Devices:
+    print(devices)
+
+for analyse in netlist.GetCircuit().Analyses:
+    print(analyse)
 
 '''  Test model card reading
 print(netlist.GetCircuit().ModelCards[0].GetName(), netlist.GetCircuit().ModelCards[0].GetParams())
@@ -27,8 +34,7 @@ print(Util.RemoveSpace(strTest))
 
 print(netlist.GetCircuit().Params)
 '''
-for devices in netlist.GetCircuit().Devices:
-    print(devices)
+
 
 '''Test expression evaluate
 print(Util.ExpandExpression('1+2*3-4/5'))

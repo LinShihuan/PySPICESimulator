@@ -5,6 +5,7 @@ from Model import Model
 from Device import Device
 from Statement import StatementType, Statement
 from GlobalVar import globalModelNames, globalParamNames, globalParamValues
+from Analyse import Analyse, AnalyseDC, AnalyseOP, AnalyseAC
 
 
 
@@ -104,6 +105,36 @@ class Netlist:
                     print(device.GetErrorMessage())
                     return False
         return True
+    def ReadAnalyses(self):
+        level = 0
+        for statement in self.__statements:
+            if statement.type == StatementType.Subckt_Start:
+                level = level + 1
+            elif statement.type == StatementType.Subckt_End:
+                level = level - 1
+            elif statement.type == StatementType.Analyses:
+                if level > 1:
+                    print("Analyse in subckt, error " + str(statement))
+                    return False
+                content = statement.content
+                if content == None:
+                    print("Error, empty content")
+                    return False
+                analyse = None
+                if content.startswith('.OP'):
+                    analyse = AnalyseOP()
+                elif content.startswith('.DC'):
+                    analyse = AnalyseDC()
+                elif content.startswith('.AC'):
+                    analyse = AnalyseAC()
+                else:
+                    print("Unspportted analyse " + str(statement))
+                    return False
+                if not analyse.ReadAnalyse(content):
+                    print('Error analyse format ' + str(statement))
+                    return False
+                else:
+                    self.__circuit.Analyses.append(analyse)
 
     def GetStatements(self):
         return self.__statements

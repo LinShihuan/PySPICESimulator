@@ -17,5 +17,5 @@ I1 1 0 AC 1A
 
 .param a=1, b=2, c=3
 
-.DC V1 1 10 DC 1
+.DC V1 1 10 1 V2 2 30 2
 .PRINT V(1)
