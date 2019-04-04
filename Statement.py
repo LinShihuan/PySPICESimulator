@@ -20,18 +20,19 @@ class __StatementType:
     __Output = 'OUTPUT'
     __Unknown = 'UNKNOWN'
     __End = 'END'
-
     __SupporttedDevice = [__R, __C, __L, __D, __Q, __M, __V, __I, __E, __F, __G, __H]
 
     def __init__(self):
         pass
-    def IsValidDeviceType(self, dType):
-        if dType == None:
+    
+    def IsValidDeviceType(self, devType):
+        if devType == None:
             return False
-        if dType in self.__SupporttedDevice:
+        elif devType in self.__SupporttedDevice:
             return True
-        return False
-
+        else:
+            return False
+        
     @property
     def Unknown(self):
         return self.__Unknown
