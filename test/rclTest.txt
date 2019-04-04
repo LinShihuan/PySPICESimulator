@@ -9,6 +9,7 @@ C1 2 3 10u
 R2 3 4 200
 R3 4 0 100
 V1 1 0 5
+I1 1 0 1
 
 .model NMODEL NMOS (LEVEL = 49, VTH0 = 0.5,
 + U0 = 1e-6, U1 = 2.3, U2 = 0.1,

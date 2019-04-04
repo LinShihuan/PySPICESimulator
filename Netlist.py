@@ -4,10 +4,9 @@ import Util
 from Model import Model
 from Device import Device
 from Statement import StatementType, Statement
+from GlobalVar import globalModelNames, globalParamNames
 
 
-globalParamNames = []
-globalModelNames = []
 
 
 class Netlist:    
@@ -83,7 +82,9 @@ class Netlist:
                     print(model.GetErrorMessage())
                     return False
         return True
+
     def ReadGlobalDevice(self):
+        level = 0
         for statement in self.__statements:
             if statement.type == StatementType.Subckt_Start:
                 level = level + 1
@@ -91,9 +92,9 @@ class Netlist:
                 level = level - 1
             elif StatementType.IsValidDeviceType(statement.type) and level == 0:
                 content = statement.content 
-                device = Device.CreateDevice()
+                device = Device.CreateDevice(statement.type)
                 if device == None:
-                    print("Unsupport device:"+ statement)
+                    print("Unsupport device:"+ str(statement))
                     return False
 
                 if device.ReadDevice(content):
@@ -105,6 +106,7 @@ class Netlist:
 
     def GetStatements(self):
         return self.__statements
+
     def GetCircuit(self):
         return self.__circuit
                                 

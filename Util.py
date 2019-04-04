@@ -1,5 +1,6 @@
 import numpy as py
-from Netlist import globalModelNames, globalParamNames
+from GlobalVar import globalModelNames, globalParamNames
+
 def GetNextWord(content):
 #get the word before next blank
     content = content.strip()
@@ -43,6 +44,8 @@ def DivideNameValue(paramValuePair):
     words = paramValuePair.split('=')
     if len(words) == 2:
         return words[0].strip(), words[1].strip()
+    elif len(words) == 1:
+        return words[0].strip(), ''
     else:
         return '', ''
 
