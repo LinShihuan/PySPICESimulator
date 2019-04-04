@@ -97,6 +97,48 @@ class Device:
                 parName, parValue = Util.DivideNameValue(pvPair)
                 self.instantParams[parName] = parValue
         return True
+    def ReadSimpleVI(self, content):
+        valueType = 'DC'
+        if content == None:
+            self.errorMsg = "None content"
+            return False
+        if len(content) < 2:
+            self.errorMsg = "Invalid content"
+            return False
+        word, content = Util.GetNextWord(content)
+        #resistor name
+        self.name = word
+        #two nodes
+       
+        word, content = Util.GetNextWord(content)
+        if len(word) == 0:
+            self.errorMsg = "Missing node name"
+            return False
+        else:
+            self.nodes.append(word)
+        word, content = Util.GetNextWord(content)
+        if len(word) == 0:
+            self.errorMsg = "Missing node name"
+            return False
+        else:
+            self.nodes.append(word)
+
+        word, content = Util.GetNextWord(content)
+        if word == 'DC' or word == 'AC' or word == 'TRAN':
+            valueType = word
+            word, content = Util.GetNextWord(content)
+        #only support simple value source first        
+        self.value = word
+        if valueType == 'DC':
+            self.DCValue = word
+        elif valueType == 'AC':
+            self.ACValue = word
+        elif valueType == 'TRAN':
+            self.TRANValue = word
+        else:
+            self.DCValue = word
+        return True
+
 
 class Device_R(Device):
     def __init__(self):
@@ -123,46 +165,7 @@ class Device_V(Device):
         self.DCValue = ''
         self.TRANValue = ''
     def ReadDevice(self, content):
-        valueType = 'DC'
-        if content == None:
-            self.errorMsg = "None content"
-            return False
-        if len(content) < 2:
-            self.errorMsg = "Invalid content"
-            return False
-        word, content = Util.GetNextWord(content)
-        #resistor name
-        self.name = word
-        #two nodes
-       
-        word, content = Util.GetNextWord(content)
-        if len(word) == 0:
-            self.errorMsg = "Missing node name"
-            return False
-        else:
-            self.nodes.append(word)
-        word, content = Util.GetNextWord(content)
-        if len(word) == 0:
-            self.errorMsg = "Missing node name"
-            return False
-        else:
-            self.nodes.append(word)
-
-        word, content = Util.GetNextWord(content)
-        if word == 'DC' or word == 'AC' or word == 'TRAN':
-            valueType = word
-            word, content = Util.GetNextWord(content)
-        #only support simple value source first        
-        self.value = word
-        if valueType == 'DC':
-            self.DCValue = word
-        elif valueType == 'AC':
-            self.ACValue = word
-        elif valueType == 'TRAN':
-            self.TRANValue = word
-        else:
-            self.DCValue = word
-        return True
+        return self.ReadSimpleVI(content)
 
 class Device_I(Device):
     def __init__(self):
@@ -171,44 +174,5 @@ class Device_I(Device):
         self.DCValue = ''
         self.TRANValue = ''
     def ReadDevice(self, content):
-        valueType = 'DC'
-        if content == None:
-            self.errorMsg = "None content"
-            return False
-        if len(content) < 2:
-            self.errorMsg = "Invalid content"
-            return False
-        word, content = Util.GetNextWord(content)
-        #resistor name
-        self.name = word
-        #two nodes
-       
-        word, content = Util.GetNextWord(content)
-        if len(word) == 0:
-            self.errorMsg = "Missing node name"
-            return False
-        else:
-            self.nodes.append(word)
-        word, content = Util.GetNextWord(content)
-        if len(word) == 0:
-            self.errorMsg = "Missing node name"
-            return False
-        else:
-            self.nodes.append(word)
-
-        word, content = Util.GetNextWord(content)
-        if word == 'DC' or word == 'AC' or word == 'TRAN':
-            valueType = word
-            word, content = Util.GetNextWord(content)
-        #only support simple value source first        
-        self.value = word
-        if valueType == 'DC':
-            self.DCValue = word
-        elif valueType == 'AC':
-            self.ACValue = word
-        elif valueType == 'TRAN':
-            self.TRANValue = word
-        else:
-            self.DCValue = word
-        return True
+        return self.ReadSimpleVI(content)
         

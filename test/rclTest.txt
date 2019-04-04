@@ -8,8 +8,8 @@ R1 2 3
 C1 2 3 10u
 R2 3 4 200
 R3 4 0 100
-V1 1 0 5
-I1 1 0 1
+V1 1 0 5V
+I1 1 0 AC 1A
 
 .model NMODEL NMOS (LEVEL = 49, VTH0 = 0.5,
 + U0 = 1e-6, U1 = 2.3, U2 = 0.1,
@@ -17,5 +17,5 @@ I1 1 0 1
 
 .param a=1, b=2, c=3
 
-.DC V1 1 10 1
+.DC V1 1 10 DC 1
 .PRINT V(1)

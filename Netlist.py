@@ -4,7 +4,7 @@ import Util
 from Model import Model
 from Device import Device
 from Statement import StatementType, Statement
-from GlobalVar import globalModelNames, globalParamNames
+from GlobalVar import globalModelNames, globalParamNames, globalParamValues
 
 
 
@@ -63,6 +63,7 @@ class Netlist:
                     else:
                         self.__circuit.Params[name] = eval(value)
                         globalParamNames.append(name)
+                        globalParamValues.append(value)
         return True
 
     def ReadGlobalModel(self):

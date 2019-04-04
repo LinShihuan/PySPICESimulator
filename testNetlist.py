@@ -30,4 +30,16 @@ print(netlist.GetCircuit().Params)
 for devices in netlist.GetCircuit().Devices:
     print(devices)
 
+'''Test expression evaluate
+print(Util.ExpandExpression('1+2*3-4/5'))
+print(Util.ExpandExpression('(1+2)*3-4/5'))
+print(Util.ExpandExpression('-1+2*3-4/5'))
+print(Util.ExpandExpression('1+2*3-(-4/5)'))
+print(Util.ExpandExpression('+1+2*3-4/5'))
+'''
+'''Test Evaluate Value
+print(Util.EvaluateValue('123.0*2+3'))
+print(Util.EvaluateValue('1k+2*3/5'))
+'''
+
  
