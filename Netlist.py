@@ -6,6 +6,8 @@ from Device import Device
 from Statement import StatementType, Statement
 
 
+globalParamNames = []
+globalModelNames = []
 
 
 class Netlist:    
@@ -15,6 +17,8 @@ class Netlist:
     def __init__(self, inputFile):
         self.__fileName = inputFile
         self.__circuit = Circuit()
+        globalModelNames = []
+        globalParamNames = []
 
     def Preprocess(self):
         lineIndex = 0
@@ -59,6 +63,7 @@ class Netlist:
                         return False
                     else:
                         self.__circuit.Params[name] = eval(value)
+                        globalParamNames.append(name)
         return True
 
     def ReadGlobalModel(self):
@@ -73,6 +78,7 @@ class Netlist:
                 model = Model()
                 if model.ReadModel(content):
                     self.__circuit.ModelCards.append(model)
+                    globalModelNames.append(model)
                 else:
                     print(model.GetErrorMessage())
                     return False

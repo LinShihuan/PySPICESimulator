@@ -1,5 +1,5 @@
 import numpy as py
-
+from Netlist import globalModelNames, globalParamNames
 def GetNextWord(content):
 #get the word before next blank
     content = content.strip()
@@ -36,10 +36,8 @@ def RemoveSpace(content):
             pass
         else:
             result = result+c
-    return result
-            
+    return result         
     
-
 def DivideNameValue(paramValuePair):
     paramValuePair = paramValuePair.strip()
     words = paramValuePair.split('=')
@@ -48,6 +46,14 @@ def DivideNameValue(paramValuePair):
     else:
         return '', ''
 
+def IsValidGlobalParam(parName):
+    if parName == None:
+        return False
+    return parName in globalParamNames
 
+def IsValidGlobalModel(modelName):
+    if modelName == None:
+        return False
+    return modelName in globalModelNames
 
     
