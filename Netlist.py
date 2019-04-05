@@ -130,6 +130,7 @@ class Netlist:
                 else:
                     print("Unspportted analyse " + str(statement))
                     return False
+                    
                 if not analyse.ReadAnalyse(content):
                     print('Error analyse format ' + str(statement))
                     return False

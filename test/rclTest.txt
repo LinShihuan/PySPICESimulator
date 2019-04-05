@@ -18,4 +18,6 @@ I1 1 0 AC 1A
 .param a=1, b=2, c=3
 
 .DC V1 1 10 1 V2 2 30 2
+.AC LIN 10 1 100
+.AC DEC 10 1K 100MEG
 .PRINT V(1)

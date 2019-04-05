@@ -5,6 +5,9 @@ import Util
 class Device:
     name = ''
     nodes = []
+    dcNodes = []
+    acNodes = []
+    tranNodes = []
     internalNodes = []
     additionalNodes = []
     instantParams = {}
@@ -54,6 +57,9 @@ class Device:
         self.internalNodes = []
         self.additionalNodes = []
         self.instantParams = {}
+        self.dcNodes = []
+        self.acNodes = []
+        self.tranNodes = []
 
 
     def GetErrorMessage(self):

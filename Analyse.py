@@ -68,5 +68,72 @@ class AnalyseDC(Analyse):
         return False
 
 class AnalyseAC(Analyse):
+    frequencys = None
+    mode = ''
     def __init__(self):
         self.name = 'AC'
+        self.frequencys = None
+        self.mode = ''
+
+    def __str__(self):
+        retString = 'AC '
+        if len(self.frequencys) > 0:
+            retString += self.mode + ' ' + str(self.frequencys[0]) + ' to ' + str(self.frequencys[-1]) 
+        return retString
+
+    def ReadAnalyse(self, content):
+        if content == None or len(content) < 5:
+            return False
+        word, content = Util.GetNextWord(content)
+        if not word == '.AC':
+            return False
+        
+        word, content = Util.GetNextWord(content)
+        if len(word) > 0:
+            self.mode = word
+        count = 0
+        word, content = Util.GetNextWord(content)
+        if len(word) == 0:
+            return False
+        else:
+            count = Util.EvaluateValue(word)
+            if count <= 0:
+                return False
+        word, content = Util.GetNextWord(content)
+        if len(word) == 0:
+            return False
+        else:
+            start = Util.EvaluateValue(word)
+        word, content = Util.GetNextWord(content)
+        if len(word) == 0:
+            return False
+        else:
+            stop = Util.EvaluateValue(word)
+        
+        if start < 0 or stop < 0 or start > stop:
+            return False
+
+        if self.mode == 'DEC':
+            tmpFreq = []
+            lastFreq = start            
+            base = start
+            res = 0
+            while res < stop:
+                for i in range(count):
+                    res += lastFreq+i*base*10/count
+                    if res <= stop:
+                        tmpFreq.append(res)           
+                base *= 10
+            else:
+                self.frequencys = np.array(tmpFreq)
+                print(self.frequencys)
+        elif self.mode == 'OCT':
+            pass
+        elif self.mode == 'LIN':
+            self.frequencys = np.linspace(start, stop, count)
+        else:
+            return False     
+        
+        if len(self.frequencys) > 0:
+            return True
+        return False
