@@ -114,19 +114,24 @@ class AnalyseAC(Analyse):
             return False
 
         if self.mode == 'DEC':
-            tmpFreq = []
-            lastFreq = start            
+            tmpFreq = []             
             base = start
-            res = 0
+            res = start
+            decNum = int(np.log10(stop/start))
+            self.frequencys  = np.logspace(int(np.log10(start)), int(np.log10(stop)), decNum*count)
+            '''
+            for i in range(int(decade)):
+
             while res < stop:
                 for i in range(count):
-                    res += lastFreq+i*base*10/count
                     if res <= stop:
-                        tmpFreq.append(res)           
+                        tmpFreq.append(res) 
+                    res += base*10/count                              
                 base *= 10
             else:
                 self.frequencys = np.array(tmpFreq)
-                print(self.frequencys)
+            '''
+            print(self.frequencys)
         elif self.mode == 'OCT':
             pass
         elif self.mode == 'LIN':
