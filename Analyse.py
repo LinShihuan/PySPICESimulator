@@ -62,7 +62,10 @@ class AnalyseDC(Analyse):
                     return False
             if start + incr >= stop:
                 return False
-            self.scanVars[source] = np.arange(start, stop+incr, incr)
+            values = np.arange(start, stop+incr, incr)
+            if len(values) > 0 and values[-1] > stop:
+                values = values[:-1]
+            self.scanVars[source] = values
         if len(self.scanVars) > 0:
             return True
         return False
@@ -113,27 +116,10 @@ class AnalyseAC(Analyse):
         if start < 0 or stop < 0 or start > stop:
             return False
 
-        if self.mode == 'DEC':
-            tmpFreq = []             
-            base = start
-            res = start
+        #AC DEC and OCT are both treated as DEC
+        if self.mode == 'DEC' or self.mode == 'OCT':            
             decNum = int(np.log10(stop/start))
-            self.frequencys  = np.logspace(int(np.log10(start)), int(np.log10(stop)), decNum*count)
-            '''
-            for i in range(int(decade)):
-
-            while res < stop:
-                for i in range(count):
-                    if res <= stop:
-                        tmpFreq.append(res) 
-                    res += base*10/count                              
-                base *= 10
-            else:
-                self.frequencys = np.array(tmpFreq)
-            '''
-            print(self.frequencys)
-        elif self.mode == 'OCT':
-            pass
+            self.frequencys  = np.logspace(int(np.log10(start)), int(np.log10(stop)), decNum*count)        
         elif self.mode == 'LIN':
             self.frequencys = np.linspace(start, stop, count)
         else:
