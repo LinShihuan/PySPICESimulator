@@ -144,6 +144,13 @@ class Device:
         else:
             self.DCValue = word
         return True
+    
+    def FillDCMatrix(self, dcMatrix):
+        pass
+    def GetDCNodes(self):
+        return self.dcNodes
+    def GetACNodes(self):
+        return self.acNodes
 
 
 class Device_R(Device):

@@ -100,7 +100,7 @@ class Netlist:
                     return False
 
                 if device.ReadDevice(content):
-                    self.__circuit.Devices.append(device)
+                    self.__circuit.AddDevice(device)
                 else:
                     print(device.GetErrorMessage())
                     return False
@@ -130,7 +130,7 @@ class Netlist:
                 else:
                     print("Unspportted analyse " + str(statement))
                     return False
-                    
+
                 if not analyse.ReadAnalyse(content):
                     print('Error analyse format ' + str(statement))
                     return False

@@ -2,6 +2,7 @@ from Netlist import Netlist, Statement, StatementType
 import numpy as numpy
 import Util
 from Circuit import Circuit
+from Nodes import Nodes 
 
 state = Statement(1, "R1 1 2 100")
 print(state.type)
@@ -19,6 +20,7 @@ netlist.ReadParameters()
 netlist.ReadGlobalModel()
 netlist.ReadGlobalDevice()
 netlist.ReadAnalyses()
+netlist.GetCircuit().BuildDCMatrix()
 
 for devices in netlist.GetCircuit().Devices:
     print(devices)
@@ -48,4 +50,11 @@ print(Util.EvaluateValue('123.0*2+3'))
 print(Util.EvaluateValue('1k+2*3/5'))
 '''
 
- 
+dcNodes = Nodes()
+dcNodes.AddNode('GND')
+dcNodes.AddNode('node1')
+dcNodes.AddNode('node2')
+print(dcNodes.GetAllNodes())
+print(dcNodes.GetIndex('node1'))
+print(dcNodes.GetIndex('node2'))
+print(dcNodes.GetIndex('node3'))

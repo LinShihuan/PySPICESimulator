@@ -1,5 +1,8 @@
 #class for the circuit
 #circuit contains subcircuit, model card, device instants, parameters, options, analyses, outputs
+from Nodes import Nodes
+import numpy as np 
+from Device import Device
 
 class Circuit:
     __devices = []
@@ -9,6 +12,12 @@ class Circuit:
     __analyses = []
     __outputs = []
     __params = {}
+    __dcMatrix = None
+    __acMatrix = None
+    __tranMatrix = None
+    __dcNodes = Nodes()
+    __acNodes = Nodes()
+    __tranNodes = Nodes()
     def __init__(self):
         pass
     @property
@@ -32,4 +41,34 @@ class Circuit:
     @property
     def Params(self):
         return self.__params
+    @property 
+    def DCNodes(self):
+        return self.__dcNodes
+
+    def AddDevice(self, dev):
+        if dev == None:
+            return False
+        else:
+            self.__devices.append(dev)
+        return True
+    
+    def BuildDCMatrix(self):
+        self.CreateDCNodes()
+        size = self.__dcNodes.Size()
+        if size > 0:
+            self.__dcMatrix = np.zero([size, size])
+        print(self.__dcMatrix)
+
+    def UpdateDCMatrix(self, device):
+        pass
+
+    def SolveDCMatrix(self):
+        pass
+
+    def CreateDCNodes(self):
+        for dev in self.__devices:
+            if not dev == None:
+                for node in dev.GetDCNodes():
+                    self.__dcNodes.AddNode(node)
+    
         
