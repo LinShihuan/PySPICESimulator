@@ -22,11 +22,13 @@ netlist.ReadGlobalDevice()
 netlist.ReadAnalyses()
 netlist.GetCircuit().BuildDCMatrix()
 
+'''test Device and Analyses
 for devices in netlist.GetCircuit().Devices:
     print(devices)
 
 for analyse in netlist.GetCircuit().Analyses:
     print(analyse)
+'''
 
 '''  Test model card reading
 print(netlist.GetCircuit().ModelCards[0].GetName(), netlist.GetCircuit().ModelCards[0].GetParams())
@@ -49,7 +51,7 @@ print(Util.ExpandExpression('+1+2*3-4/5'))
 print(Util.EvaluateValue('123.0*2+3'))
 print(Util.EvaluateValue('1k+2*3/5'))
 '''
-
+'''Nodes test
 dcNodes = Nodes()
 dcNodes.AddNode('GND')
 dcNodes.AddNode('node1')
@@ -58,3 +60,4 @@ print(dcNodes.GetAllNodes())
 print(dcNodes.GetIndex('node1'))
 print(dcNodes.GetIndex('node2'))
 print(dcNodes.GetIndex('node3'))
+'''

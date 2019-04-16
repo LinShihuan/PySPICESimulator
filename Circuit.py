@@ -13,8 +13,11 @@ class Circuit:
     __outputs = []
     __params = {}
     __dcMatrix = None
+    __dcRHS = None
     __acMatrix = None
+    __acRHS = None
     __tranMatrix = None
+    __tranRHS = None
     __dcNodes = Nodes()
     __acNodes = Nodes()
     __tranNodes = Nodes()
@@ -56,8 +59,27 @@ class Circuit:
         self.CreateDCNodes()
         size = self.__dcNodes.Size()
         if size > 0:
-            self.__dcMatrix = np.zero([size, size])
+            self.__dcMatrix = np.zeros([size, size])
+            self.__dcRHS = np.zeros(size)
+        print('Initilized to zeros')
         print(self.__dcMatrix)
+        print(self.__dcRHS)
+
+        for dev in self.__devices:
+            dev.FillDCMatrix(self.DCNodes, self.__dcMatrix, self.__dcRHS)
+        print('After fill matrix')
+        print(self.__dcMatrix)
+        print(self.__dcRHS)
+
+        self.__dcMatrix = self.__dcMatrix[1:, 1:]
+        self.__dcRHS = self.__dcRHS[1:]
+        print('After removing GND')
+        print(self.__dcMatrix)
+        print(self.__dcRHS)
+        res = np.linalg.solve(self.__dcMatrix, self.__dcRHS)
+        print('Result')
+        print(res)
+        
 
     def UpdateDCMatrix(self, device):
         pass
@@ -66,6 +88,7 @@ class Circuit:
         pass
 
     def CreateDCNodes(self):
+        self.__dcNodes.AddNode('GND')
         for dev in self.__devices:
             if not dev == None:
                 for node in dev.GetDCNodes():

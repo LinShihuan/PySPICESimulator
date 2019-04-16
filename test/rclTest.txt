@@ -1,15 +1,12 @@
 title line
 
-*this is L
-L1 1 2 10u
-*this is R
-R1 2 3 
-+100
-C1 2 3 10u
-R2 3 4 200
-R3 4 0 100
-V1 1 0 5V
-I1 1 0 AC 1A
+
+R1 3 0 10
+R2 2 3 10
+R3 1 2 10
+V1 1 2 DC 30
+Rs 0 1 10
+
 
 .model NMODEL NMOS (LEVEL = 49, VTH0 = 0.5,
 + U0 = 1e-6, U1 = 2.3, U2 = 0.1,
