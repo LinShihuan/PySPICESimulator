@@ -79,6 +79,7 @@ class Circuit:
         res = np.linalg.solve(self.__dcMatrix, self.__dcRHS)
         print('Result')
         print(res)
+        print(self.__dcNodes.GetAllNodes())
         
 
     def UpdateDCMatrix(self, device):
