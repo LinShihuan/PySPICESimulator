@@ -92,7 +92,7 @@ class Circuit:
         self.__dcNodes.AddNode('GND')
         for dev in self.__devices:
             if not dev == None:
-                for node in dev.GetDCNodes():
+                for node in dev.GetDCNodes(self.__devices):
                     self.__dcNodes.AddNode(node)
     
         

@@ -1,12 +1,11 @@
 title line
 
-
-R1 0 3 10
-R2 3 2 10
-R3 1 2 10
-V1 1 2 DC 30
-Rs 0 1 10
-
+R1 1 0 10
+R2 1 0 10
+V1 1 0 5
+R3 2 0 10
+F1 2 3 V1 2
+R4 3 0 10
 
 .model NMODEL NMOS (LEVEL = 49, VTH0 = 0.5,
 + U0 = 1e-6, U1 = 2.3, U2 = 0.1,
