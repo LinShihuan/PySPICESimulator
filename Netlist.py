@@ -7,9 +7,6 @@ from Statement import StatementType, Statement
 from GlobalVar import globalModelNames, globalParamNames, globalParamValues
 from Analyse import Analyse, AnalyseDC, AnalyseOP, AnalyseAC
 
-
-
-
 class Netlist:    
     __statements = []
     __fileName = ''
@@ -105,6 +102,7 @@ class Netlist:
                     print(device.GetErrorMessage())
                     return False
         return True
+        
     def ReadAnalyses(self):
         level = 0
         for statement in self.__statements:
