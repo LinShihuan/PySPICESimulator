@@ -129,3 +129,46 @@ def IsNumber(str):
         return True
     except ValueError:
         return False
+
+class ModelType:
+    __R = 'Resistor'
+    __C = 'Capacitor'
+    __L = 'Inductor'
+    __N = 'NMOS'
+    __P = 'PMOS'
+    __D = 'DIODE'
+    __Q = 'BJT'
+    __Unknown = 'Unknwon'
+    __SupportModel = [__R, __C, __L, __N, __P, __D, __Q]
+    
+    def __init__(self):
+        pass
+
+    @property
+    def R(self):
+        return self.__R
+    @property
+    def C(self):
+        return self.__C
+    @property
+    def L(self):
+        return self.__L
+    @property
+    def N(self):
+        return self.__N
+    @property
+    def P(self):
+        return self.__P
+    @property
+    def D(self):
+        return self.__D
+    @property
+    def Q(self):
+        return self.__Q
+    @property
+    def Unknown(self):
+        return self.__Unknown
+    def IsValidType(self, mType):
+        if mType in self.__SupportModel:
+            return True
+        return False 

@@ -1,4 +1,9 @@
 
+from Util import ModelType
+from ResistorModel import ResistorModelCore
+
+modelType = ModelType()
+
 class ModelCore:
     def SetParam(self, parName, parValue):
         return False
@@ -10,16 +15,30 @@ class ModelCore:
         return False
     def GetDCDevices(self):
         return None
+
     def GetACDevices(self):
         return None
+
     def GetTranDevices(self):
         return None
+
     def IsModelValid(self):
         return False
+
     def SetInstanceName(self, devName):
         return False
+
     def SetInstanceParam(self, parName, parValue):
         return False
+
+    @staticmethod
+    def CreateModelCore(type, level):
+        if type == None or len(type) == 0:
+            return False, None
+        if type == modelType.R:
+            return ResistorModelCore()
+        
+        
 
 
     

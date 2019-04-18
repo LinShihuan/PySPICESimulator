@@ -1,50 +1,10 @@
 #define the model card base class
 import Util
+from ModelCore import ModelCore
 
-class __ModelType:
-    __R = 'Resistor'
-    __C = 'Capacitor'
-    __L = 'Inductor'
-    __N = 'NMOS'
-    __P = 'PMOS'
-    __D = 'DIODE'
-    __Q = 'BJT'
-    __Unknown = 'Unknwon'
-    __SupportModel = [__R, __C, __L, __N, __P, __D, __Q]
-    
-    def __init__(self):
-        pass
 
-    @property
-    def R(self):
-        return self.__R
-    @property
-    def C(self):
-        return self.__C
-    @property
-    def L(self):
-        return self.__L
-    @property
-    def N(self):
-        return self.__N
-    @property
-    def P(self):
-        return self.__P
-    @property
-    def D(self):
-        return self.__D
-    @property
-    def Q(self):
-        return self.__Q
-    @property
-    def Unknown(self):
-        return self.__Unknown
-    def IsValidType(self, mType):
-        if mType in self.__SupportModel:
-            return True
-        return False 
     
-modelType = __ModelType()
+modelType = Util.ModelType()
 
 class Model:
     __name = ''
@@ -52,9 +12,15 @@ class Model:
     __level = ''
     __params = {}
     __errorMsg = ''
+    __modelCore = None
+
     def __init__(self):
         pass
-        
+    
+    @property
+    def ModelCore(self):
+        return self.__modelCore
+
     def ReadModel(self, content):
         #it starts with .model
         word, content = Util.GetNextWord(content)
