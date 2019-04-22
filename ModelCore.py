@@ -5,6 +5,10 @@ from ResistorModel import ResistorModelCore
 modelType = ModelType()
 
 class ModelCore:
+    
+    def __init__(self):
+        self.__instName = ''
+
     def SetParam(self, parName, parValue):
         return False
     def ReadModelCard(self, pvMap):

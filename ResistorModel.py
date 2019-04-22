@@ -1,22 +1,31 @@
 
 from Device import Device
 from Device import Device_R
+from Parameter import Parameter
+from Util import EvaluateValue
+import numpy as np
 
 class ResistorModelCore:
     
     def __init__(self):
-        self.__L = '1.0'
-        self.__W = '1.0'
-        self.__TEMP = '27.0'
+        self.__L = Parameter('1.0e-6')
+        self.__W = Parameter('1.0e-6')
+        self.__TEMP = Parameter('27.0')
         #model parameters
-        self.__TC1 = '0.0'
-        self.__TC2 = '0.0'
-        self.__RSH = '50'
-        self.__DEFW = '1.0e-6'
-        self.__NARROW = '0.0'
-        self.__TNOM = '27.0'
-        self.__node1 = ''
-        self.__node2 = ''
+        self.__TC1 = Parameter('0.0')
+        self.__TC2 = Parameter('0.0')
+        self.__RSH = Parameter('50')
+        self.__DEFW = Parameter('1.0e-6')
+        self.__NARROW = Parameter('0.0')
+        self.__TNOM = Parameter('27.0')
+        self.__node1 = Parameter('')
+        self.__node2 = Parameter('')
+        self.__resistance = 0.0
+    
+    def ResetInstance(self):
+        self.__L.Reset()
+        self.__W.Reset()
+        self.__TEMP.Reset()
 
     def SetParam(self, parName, parValue):
         if parName == None or len(parName) == 0:
@@ -59,16 +68,57 @@ class ResistorModelCore:
         self.__node2 = nodes[1]
         return True
 
+    def SetInstanceName(self, devName):
+        if devName == None or len(devName) < 1:
+            return False
+        self.__instName = devName
+            
+    def SetInstanceParam(self, parName, parValue):
+        if parName == None or len(parName) == 0 or parValue == None or len(parValue) == 0:
+            return False
+        if parName == 'L':
+            self.__L = parValue
+        elif parName == 'W':
+            self.__W = parValue
+        elif parName == 'TEMP':
+            self.__TEMP = parValue
+        else:
+            return False
+        return True           
     def GetDCDevices(self):
-
-        return None
+        if not self.__L.IsGiven():
+            return None
+        retDevice = Device_R()
+        retDevice.AddNode(self.__node1)
+        retDevice.AddNode(self.__node2)
+        self.EvalueateResistance()
+        retDevice.SetValue(str(self.__resistance))
+        retDevice.SetDCValue(str(self.__resistance))
+        return retDevice
     def GetACDevices(self):
         return None
     def GetTranDevices(self):
         return None
     def IsModelValid(self):
         return False
-    def SetInstanceName(self, devName):
-        return False
-    def SetInstanceParam(self, parName, parValue):
-        return False
+    def EvalueateResistance(self):
+        rsh = EvaluateValue(self.__RSH.GetValue())
+        l = EvaluateValue(self.__L.GetValue())
+        if not self.__W.IsGiven():
+            w = EvaluateValue(self.__DEFW.GetValue())
+        else:
+            w = EvaluateValue(self.__W.GetValue())
+        narrow = EvaluateValue(self.__NARROW.GetValue())
+        temp = EvaluateValue(self.__TEMP.GetValue())
+        tnom = EvaluateValue(self.__TNOM.GetValue())
+        if w - narrow < 1e-15:
+            w = narrow + 1e-15
+        self.__resistance = rsh * (l - narrow) / (w - narrow)
+        if np.abs(temp - tnom) > 1e-3:
+            tc1 = EvaluateValue(self.__TC1.GetValue())
+            tc2 = EvaluateValue(self.__TC2.GetValue())
+            self.__resistance = self.__resistance * (1+tc1*(temp-tnom)+tc2*((temp-tnom)**2))
+        return True
+
+
+    

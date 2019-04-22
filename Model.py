@@ -55,9 +55,7 @@ class Model:
             self.__params[pName] = pValue
         
         return True
-        
-    
-
+            
     def IsValidModel(self):
         if  (not self.__type == modelType.Unknown) and (len(self.__errorMsg) == 0):
             return True
