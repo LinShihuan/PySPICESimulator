@@ -260,6 +260,14 @@ class Device_R(Device):
         self.ResetList()
     def ReadDevice(self, content):        
         return self.ReadRCL(content)              
+
+    def AddDCExtraNodes(self, devices):
+        if not self.GetModelCore() == None:
+            innerNodes = self.GetModelCore().GetDCInnerNodes()
+            if innerNodes == None:
+                return None
+            for node in innerNodes:
+                self.AddDCNode(node)
          
     def FillDCMatrix(self, dcNodes, dcMatrix, dcRHS):
         if dcNodes.Size() == 0:

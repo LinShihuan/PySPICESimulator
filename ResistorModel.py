@@ -135,6 +135,12 @@ class ResistorModelCore(ModelCore):
             tc2 = EvaluateValue(self.__TC2.GetValue())
             self.__resistance = self.__resistance * (1+tc1*(temp-tnom)+tc2*((temp-tnom)**2))
         return True
+    def GetDCInnerNodes(self):        
+        return None
+    def GetACInnerNodes(self):
+        return None
+    def GetTRANInnerNodes(self):
+        return None
 
 
     

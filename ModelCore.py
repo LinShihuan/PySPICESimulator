@@ -13,6 +13,12 @@ class ModelCore:
         return ''
     def SetInputNodes(self, nodes):
         return False
+    def GetDCInnerNodes(self):        
+        return None
+    def GetACInnerNodes(self):
+        return None
+    def GetTRANInnerNodes(self):
+        return None
     def GetDCDevices(self):
         return None
 
