@@ -47,6 +47,14 @@ class Circuit:
     @property 
     def DCNodes(self):
         return self.__dcNodes
+    
+    def GetModel(self, mdlName):
+        if mdlName == None or len(mdlName) == 0:
+            return None
+        for model in self.__modelCards:
+            if model.GetName() == mdlName:
+                return model
+        return None
 
     def AddDevice(self, dev):
         if dev == None:

@@ -1,11 +1,14 @@
 
-from Device import Device
-from Device import Device_R
 from Parameter import Parameter
 from Util import EvaluateValue
+from Util import ModelType
 import numpy as np
+from ModelDevice import ModelDevice
+from ModelCore import ModelCore
 
-class ResistorModelCore:
+modelType = ModelType()
+
+class ResistorModelCore(ModelCore):
     
     def __init__(self):
         self.__L = Parameter('1.0e-6')
@@ -63,7 +66,7 @@ class ResistorModelCore:
         if pvMap == None:  
             return False
         ret = True
-        for key, value in pvMap.iteritems():
+        for key, value in pvMap.items():
             ret = (ret and self.SetParam(key, value))
         return ret
 
@@ -95,16 +98,12 @@ class ResistorModelCore:
         else:
             return False
         return True           
-        
+
     def GetDCDevices(self):
         if not self.__L.IsGiven():
             return None
-        retDevice = Device_R()
-        retDevice.AddNode(self.__node1)
-        retDevice.AddNode(self.__node2)
-        self.EvalueateResistance()
-        retDevice.SetValue(str(self.__resistance))
-        retDevice.SetDCValue(str(self.__resistance))
+        self.Evalueate()
+        retDevice = ModelDevice('mdlR1', [self.__node1, self.__node2], self.__resistance, modelType.R)
         return retDevice
 
     def GetACDevices(self):
@@ -118,7 +117,7 @@ class ResistorModelCore:
             return False
         return True
 
-    def EvalueateResistance(self):
+    def Evalueate(self):
         rsh = EvaluateValue(self.__RSH.GetValue())
         l = EvaluateValue(self.__L.GetValue())
         if not self.__W.IsGiven():

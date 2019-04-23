@@ -4,7 +4,7 @@ class Parameter:
         self.__value = defVal
         self.__given = False
     def IsGiven(self):
-        return self.given
+        return self.__given
     def GetValue(self):
         return self.__value
     def GetDefaultValue(self):

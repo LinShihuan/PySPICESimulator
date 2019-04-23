@@ -4,7 +4,7 @@ R1 1 2 rm L=1e-6
 R2 2 0 10
 I1 1 0 1
 
-.model rm Resistor (RSH=100, NARROW=0, TNMO=27)
+.model rm Resistor (RSH=100, NARROW=0, TNOM=27)
 
 .model NMODEL NMOS (LEVEL = 49, VTH0 = 0.5,
 + U0 = 1e-6, U1 = 2.3, U2 = 0.1,

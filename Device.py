@@ -1,6 +1,7 @@
 
 from Statement import StatementType, Statement
 import Util
+from ModelCore import ModelCore
 
 class Device:
     name = ''
@@ -17,6 +18,7 @@ class Device:
     __DCValue = ''
     __ACValue = ''
     __TranValue = ''
+    __modelCore = None
 
     def __init__(self):
         pass
@@ -83,6 +85,22 @@ class Device:
             return False
         self.__TranValue = inVal
         return True
+    
+    def HasModel(self):
+        if len(self.model) > 1:
+            return True
+        return False
+    def GetModelName(self):
+        if len(self.model) > 1:
+            return self.model
+        return ''
+    def GetModelCore(self):
+        return self.__modelCore
+    def SetModelCore(self, model):
+        self.__modelCore = model
+        self.__modelCore.SetInstanceName(self.name)
+        for pn, pv in self.instantParams.items():
+            self.__modelCore.SetInstanceParam(pn, pv)
 
     @staticmethod
     def CreateDevice(devType):

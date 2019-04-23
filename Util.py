@@ -131,9 +131,9 @@ def IsNumber(str):
         return False
 
 class ModelType:
-    __R = 'Resistor'
-    __C = 'Capacitor'
-    __L = 'Inductor'
+    __R = 'RESISTOR'
+    __C = 'CAPACITOR'
+    __L = 'INDUCTOR'
     __N = 'NMOS'
     __P = 'PMOS'
     __D = 'DIODE'
@@ -172,3 +172,4 @@ class ModelType:
         if mType in self.__SupportModel:
             return True
         return False 
+

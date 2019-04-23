@@ -76,7 +76,7 @@ class Netlist:
                 model = Model()
                 if model.ReadModel(content):
                     self.__circuit.ModelCards.append(model)
-                    globalModelNames.append(model)
+                    globalModelNames.append(model.GetName())
                 else:
                     print(model.GetErrorMessage())
                     return False
@@ -97,6 +97,13 @@ class Netlist:
                     return False
 
                 if device.ReadDevice(content):
+                    if device.HasModel():
+                        mdlName = device.GetModelName()
+                        if mdlName in globalModelNames:
+                            model = self.__circuit.GetModel(mdlName)
+                            if not model == None:
+                                mdlCore = model.ModelCore.Copy()
+                                device.SetModelCore(mdlCore)                                
                     self.__circuit.AddDevice(device)
                 else:
                     print(device.GetErrorMessage())

@@ -1,6 +1,7 @@
 #define the model card base class
 import Util
 from ModelCore import ModelCore
+from ModelCoreCreator import CreateModelCore
 
 
     
@@ -53,7 +54,10 @@ class Model:
                 self.__errorMsg = 'Unknown model parameter or value'
                 return False
             self.__params[pName] = pValue
-        
+        self.__modelCore = CreateModelCore(self.__type, self.__level)
+        if self.__modelCore == None:
+            return False
+        self.__modelCore.ReadModelCard(self.__params)
         return True
             
     def IsValidModel(self):
