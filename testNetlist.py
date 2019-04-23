@@ -22,10 +22,10 @@ netlist.ReadGlobalDevice()
 netlist.ReadAnalyses()
 netlist.GetCircuit().BuildDCMatrix()
 
-#'''test Device and Analyses
+'''test Device and Analyses
 for devices in netlist.GetCircuit().Devices:
     print(devices)
-'''
+
 for analyse in netlist.GetCircuit().Analyses:
     print(analyse)
 '''

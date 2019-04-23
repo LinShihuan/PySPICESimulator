@@ -34,6 +34,9 @@ class ModelCore:
 
     def SetInstanceParam(self, parName, parValue):
         return False
+    
+    def Copy(self):
+        return None
 
     @staticmethod
     def CreateModelCore(type, level):

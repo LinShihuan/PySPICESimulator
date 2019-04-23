@@ -22,6 +22,16 @@ class ResistorModelCore:
         self.__node2 = Parameter('')
         self.__resistance = 0.0
     
+    def Copy(self):
+        ret = ResistorModelCore()
+        ret.__TC1 = self.__TC1
+        ret.__TC2 = self.__TC2
+        ret.__RSH = self.__RSH
+        ret.__DEFW = self.__DEFW
+        ret.__NARROW = self.__NARROW
+        ret.__TNOM = self.__TNOM
+        return ret
+
     def ResetInstance(self):
         self.__L.Reset()
         self.__W.Reset()
@@ -85,6 +95,7 @@ class ResistorModelCore:
         else:
             return False
         return True           
+        
     def GetDCDevices(self):
         if not self.__L.IsGiven():
             return None
@@ -95,12 +106,18 @@ class ResistorModelCore:
         retDevice.SetValue(str(self.__resistance))
         retDevice.SetDCValue(str(self.__resistance))
         return retDevice
+
     def GetACDevices(self):
         return None
+
     def GetTranDevices(self):
         return None
+
     def IsModelValid(self):
-        return False
+        if not self.__L.IsGiven():
+            return False
+        return True
+
     def EvalueateResistance(self):
         rsh = EvaluateValue(self.__RSH.GetValue())
         l = EvaluateValue(self.__L.GetValue())
